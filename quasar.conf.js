@@ -5,6 +5,7 @@
 
 // Configuration for your app
 // https://quasar.dev/quasar-cli/quasar-conf-js
+/* eslint-env node */
 
 module.exports = function (/* ctx */) {
   return {
@@ -19,18 +20,17 @@ module.exports = function (/* ctx */) {
     // https://quasar.dev/quasar-cli/boot-files
     boot: [
       
-      'axios',
     ],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
     css: [
-      'app.scss'
+      'app.sass'
     ],
 
     // https://github.com/quasarframework/quasar/tree/dev/extras
     extras: [
       // 'ionicons-v4',
-      // 'mdi-v5',
+      'mdi-v5',
       // 'fontawesome-v5',
       // 'eva-icons',
       // 'themify',
@@ -38,7 +38,8 @@ module.exports = function (/* ctx */) {
       // 'roboto-font-latin-ext', // this or either 'roboto-font', NEVER both!
 
       'roboto-font', // optional, you are not bound to it
-      'material-icons', // optional, you are not bound to it
+      'material-icons', // optional, you are not bound to it,
+      
     ],
 
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
@@ -63,6 +64,12 @@ module.exports = function (/* ctx */) {
 
       // https://quasar.dev/quasar-cli/handling-webpack
       extendWebpack (cfg) {
+cfg.module.rules.push({
+          enforce: 'pre',
+          test: /\.(js|vue)$/,
+          loader: 'eslint-loader',
+          exclude: /node_modules/
+        })
       },
     },
 
@@ -88,7 +95,15 @@ module.exports = function (/* ctx */) {
       // (like functional components as one of the examples),
       // you can manually specify Quasar components/directives to be available everywhere:
       //
-      // components: [],
+      components: [
+        'QTable',
+    
+        // pick only what you are using from:
+        'QTh',
+        'QTr',
+        'QTd',
+        // 'QTableColumns'
+      ],
       // directives: [],
 
       // Quasar plugins
@@ -111,7 +126,7 @@ module.exports = function (/* ctx */) {
       manifest: {
         name: `yonduadmin`,
         short_name: `yonduadmin`,
-        description: `Admin Website`,
+        description: ``,
         display: 'standalone',
         orientation: 'portrait',
         background_color: '#ffffff',
